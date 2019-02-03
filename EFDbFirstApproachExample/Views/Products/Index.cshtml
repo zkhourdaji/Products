@@ -1,0 +1,123 @@
+﻿@model EFDbFirstApproachExample.ViewModels.ProductsViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+@{
+    //TODO: user html helpers instead of html tags
+}
+<div class="container-fluid">
+    <h2>List of Products</h2>
+
+    <form action="@Url.Action("Index", "Products")" method="GET" class="form-inline">
+        <div class="form-group">
+            <input name="search" value="@ViewBag.search" type="text" placeholder="search term" class="form-control" />
+            <input type="submit" class="btn btn-primary" />
+        </div>
+    </form>
+    <br />
+
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">Image</th>
+                <th scope="col">
+                    @if (ViewBag.sortDirection == "asc")
+                    {
+                        <a href="@Url.Action("Index","Products")?sortDirection=desc&sortColumn=ProductID&pageNumber=@ViewBag.currentPage">Product ID</a>
+                    }
+                    else
+                    {
+                        <a href="@Url.Action("Index","Products")?sortDirection=asc&sortColumn=ProductID&pageNumber=@ViewBag.currentPage">Product ID</a>
+
+                    }
+                </th>
+                <th scope="col">
+                    @if (ViewBag.sortDirection == "asc")
+                    {
+                        <a href="@Url.Action("Index","Products")?sortDirection=desc&sortColumn=ProductName&pageNumber=@ViewBag.currentPage">Product Name</a>
+
+                    }
+                    else
+                    {
+                        <a href="@Url.Action("Index","Products")?sortDirection=asc&sortColumn=ProductName&pageNumber=@ViewBag.currentPage">Product Name</a>
+
+                    }
+                </th>
+                <th scope="col">Price</th>
+                <th scope="col">Date of purchase</th>
+                <th scope="col">Availability status</th>
+                <th scope="col">Category</th>
+                <th scope="col">Brand</th>
+                <th scope="col">Active</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in Model.Products)
+            {
+                <tr>
+                    <td>
+                        @if (!string.IsNullOrEmpty(product.Photo) && product.Photo.StartsWith("http"))
+                        {
+                            <img src="@product.Photo" width="100" />
+                        }
+                        else
+                        {
+
+                            <img src="data:image;base64,@product.Photo" width="100" />
+                        }
+                    </td>
+                    <td>@product.ProductID</td>
+                    <td>@product.ProductName</td>
+                    <td>$@product.Price</td>
+                    @if (product.DateOfPurchase != null)
+                    {
+                        <td>@product.DateOfPurchase.Value.Date.ToString("d")</td>
+                    }
+                    else
+                    {
+                        <td>---</td>
+                    }
+                    <td>@product.AvailabilityStatus</td>
+                    <td>@product.Category.CategoryName</td>
+                    <td>@product.Brand.BrandName</td>
+                    <td>@product.Active</td>
+                    <td>
+                        <a href="@Url.Action("Details","Products")/@product.ProductID">Details</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <!-- list of page numbers -->
+    <div>
+
+        @if (ViewBag.currentPage > 1)
+        {
+            <a  class="btn btn-primary btn-sm" href="@Url.Action("Index","Products")?pageNumber=@(ViewBag.currentPage - 1)">Previous</a>
+        }
+        else
+        {
+            <a>Previous</a>
+        }
+        @for (int pageNumber = 1; pageNumber <= ViewBag.pageCount; pageNumber++)
+        {
+            <span>
+                <a href="@Url.Action("Index", "Products")?pageNumber=@pageNumber">@pageNumber</a>
+            </span>
+        }
+        @if (ViewBag.currentPage == ViewBag.pageCount)
+        {
+            <a>Next</a>
+        }
+        else
+        {
+            <a  class="btn btn-primary btn-sm" href="@Url.Action("Index","Products")?pageNumber=@(ViewBag.currentPage + 1)">Next</a>
+        }
+
+    </div>
+</div>

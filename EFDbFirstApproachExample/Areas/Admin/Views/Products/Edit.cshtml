@@ -1,0 +1,89 @@
+﻿@model EFDbFirstApproachExample.Models.Product
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout1.cshtml";
+}
+<div class="container-fluid">
+    <h2>Edit a product</h2>
+
+    @{ Html.BeginForm("Edit", "Products", new { Area = "Admin" }, FormMethod.Post, new { enctype = "multipart/form-data" });}
+
+    <div>
+        @Html.HiddenFor(m => m.ProductID)
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.LabelFor(m => m.ProductName)
+                @Html.TextBoxFor(m => m.ProductName, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.LabelFor(m => m.Price)
+                @Html.TextBoxFor(m => m.Price, new { @class = "form-control" })
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.DateOfPurchase)
+                @Html.TextBoxFor(m => m.DateOfPurchase, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="col-md-6">
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.AvailabilityStatus)
+                @Html.TextBoxFor(m => m.AvailabilityStatus, new { @class = "form-control" })
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            @{
+                //TODO: have a drop down to select a brand instead of ID
+            }
+            <div class="form-group">
+                @Html.LabelFor(m => m.BrandID)
+                @Html.TextBoxFor(m => m.BrandID, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="col-md-6">
+            @{
+                //TODO: have a drop down to select a category instead of ID
+            }
+            <div class="form-group">
+                @Html.LabelFor(m => m.CategoryID)
+                @Html.TextBoxFor(m => m.CategoryID, new { @class = "form-control" })
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Active)
+                @Html.TextBoxFor(m => m.Active, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.LabelFor(m => m.Photo)
+                <input class="form-control" type="file" />
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+  
+    <input class="btn btn-success mb-2" type="submit" />
+    @{ Html.EndForm();}
+
+    <a class="btn btn-primary" href="@Url.Action("Index", "Products", new { Area = "Admin" })">Back to products</a>
+</div>

@@ -1,0 +1,36 @@
+﻿@model EFDbFirstApproachExample.ViewModels.LoginViewModel
+
+@{
+    ViewBag.Title = "Login";
+
+}
+<div class="container-fluid">
+    <h2>Login</h2>
+
+    @using (Html.BeginForm("Login", "Account", FormMethod.Post))
+    {
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group">
+                @Html.LabelFor(m => m.Username)
+                @Html.TextBoxFor(m => m.Username, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Username)
+            </div>
+        </div>
+    </div>
+       
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group">
+                @Html.LabelFor(m => m.Password)
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Password)
+            </div>
+        </div>
+    </div>
+        <div>
+            @Html.ValidationSummary()
+        </div>
+        <input type="submit" value="Login" class="btn btn-primary" />
+    }
+</div>

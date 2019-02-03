@@ -1,0 +1,35 @@
+﻿@model List<EFDbFirstApproachExample.Identity.ApplicationUser>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout1.cshtml";
+}
+
+<div class="container-fluid">
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Mobile</th>
+                <th>City</th>
+                <th>Country</th>
+                <th>Date of Birth</th>
+            </tr>
+        </thead>
+        @foreach (EFDbFirstApproachExample.Identity.ApplicationUser user in Model)
+        {
+            <tr>
+                <td>@user.UserName</td>
+                <td>@user.Email</td>
+                <td>@user.PhoneNumber</td>
+                <td>@user.City</td>
+                <td>@user.Country</td>
+                <td>@user.Birthday</td>
+            </tr>
+        }
+    </table>
+
+    <a class="btn btn-primary" href="@Url.Action("Index","Home", new { area = "Admin" })">Back</a>
+</div>

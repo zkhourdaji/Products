@@ -1,0 +1,99 @@
+﻿@model EFDbFirstApproachExample.Models.Product
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Areas/Manager/Views/Shared/_Layout1.cshtml";
+}
+
+<div class="container-fluid">
+
+    <h2>Create Product</h2>
+
+    @{Html.BeginForm("Create", "Products", new { Area = "Manager" }, FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-group" });}
+
+    <div class="row">
+        <div class="col-md-2">
+            <div class="form-group">
+                @Html.Label("ProductName")
+                @Html.TextBox("ProductName", "", new { placeholder = "Product Name", @class = "form-control" })
+                @Html.ValidationMessageFor(product => product.ProductName)
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2">
+            <div class="form-group">
+                @Html.Label("Price")
+                @Html.TextBox("Price", "", new { placeholder = "Price", @class = "form-control" })
+                @Html.ValidationMessageFor(product => product.Price)
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2">
+            <div class="form-group">
+                @Html.Label("DateOfPurchase")
+                @Html.TextBox("DateOfPurchase", "", new { placeholder = "mm-dd-yyyy", @class = "form-control" })
+                @Html.ValidationMessageFor(product => product.DateOfPurchase)
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-inline">
+                <label>Select Availability Status: </label>
+                <label>@Html.RadioButton("AvailabilityStatus", "In Stock", true, new { @class = "form-control" }) In Stock </label>
+                <label>@Html.RadioButton("AvailabilityStatus", "Out of Stock", false, new { @class = "form-control" }) Out of Stock </label>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2">
+            <div class="form-group">
+                @{
+                    List<SelectListItem> categoryOptions = new List<SelectListItem>();
+                    List<SelectListItem> brandsOptions = new List<SelectListItem>();
+                    categoryOptions.Add(new SelectListItem { Text = "Select a Category" });
+                    brandsOptions.Add(new SelectListItem { Text = "Select a Brand" });
+
+                    foreach (EFDbFirstApproachExample.Models.Category category in ViewBag.categories)
+                    {
+                        categoryOptions.Add(new SelectListItem { Text = category.CategoryName, Value = category.CategoryID + "" });
+                    }
+                    foreach (EFDbFirstApproachExample.Models.Brand brand in ViewBag.brands)
+                    {
+                        brandsOptions.Add(new SelectListItem { Text = brand.BrandName, Value = brand.BrandID + "" });
+                    }
+                }
+                <label>Categories: @Html.DropDownListFor(m => m.CategoryID, categoryOptions)</label>
+                @Html.ValidationMessageFor(product => product.CategoryID)
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2">
+            <div class="form-group">
+                <label>Brands: @Html.DropDownListFor(m => m.BrandID, brandsOptions)</label>
+                @Html.ValidationMessageFor(product => product.BrandID)
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2">
+            <div class="form-group">
+                <input type="file" name="Photo" />
+            </div>
+        </div>
+    </div>
+    <a class="btn btn-danger" href="@Url.Action("Index","Products",new { Area = "Manager" })">Cancel</a>
+    <input type="submit" class="btn btn-success" />
+
+    @Html.ValidationSummary()
+    @{ Html.EndForm();}
+
+
+</div>

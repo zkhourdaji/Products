@@ -1,0 +1,22 @@
+﻿@model EFDbFirstApproachExample.Models.Brand
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout1.cshtml";
+}
+
+@{ 
+    //TODO: User html helpers instead of html tags
+}
+<div class="container-fluid">
+    <p>Are you sure you want to delete brand: @Model.BrandName</p>
+    <p>WARNING: ALL PRODUCTS WITH THIS BRAND WILL BE DELETED!!</p>
+
+    <div class="form-inline">
+        <form action="@Url.Action("Delete","Brands", new { Area = "Admin" })" method="POST">
+            <input type="hidden" name="BrandID" value="@Model.BrandID" />
+            <input type="hidden" name="BrandName" value="@Model.BrandName" />
+            <a class="btn btn-danger" style="text-decoration:none; color:black" href="@Url.Action("Index","Brands", new { Area = "Admin" })">NO</a>
+            <input class="btn btn-success" type="submit" value="YES" />
+        </form>
+    </div>
+</div>

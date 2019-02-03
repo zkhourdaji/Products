@@ -1,0 +1,43 @@
+﻿@model List<EFDbFirstApproachExample.Models.Brand>
+@{
+    ViewBag.Title = "Brands";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout1.cshtml";
+}
+
+<div class="container-fluid">
+    <h2>List of Brands: </h2>
+    <div class="form-group">
+        <a href="@Url.Action("Create","Brands", new { Area="Admin"})" class="btn btn-primary">Add a new brand</a>
+    </div>
+    <form action="@Url.Action("Index", "Brands", new { Area = "Admin" })" method="GET" class="form-group form-inline">
+        <input class="form-control" name="search" placeholder="search" />
+        <input class="form-control btn btn-primary ml-2" type="submit" />
+    </form>
+    <div class="row">
+        <div class="col-md-4">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Brand ID</th>
+                        <th>Brand Name</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (EFDbFirstApproachExample.Models.Brand brand in Model)
+                    {
+                        <tr>
+                            <td>@brand.BrandID</td>
+                            <td>@brand.BrandName</td>
+                            <td>
+                                <a href="@Url.Action("Edit", "Brands", new { Area = "Admin" })/@brand.BrandID">Edit</a>
+                                || <a href="@Url.Action("Delete", "Brands", new { Area = "Admin" })/@brand.BrandID">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
